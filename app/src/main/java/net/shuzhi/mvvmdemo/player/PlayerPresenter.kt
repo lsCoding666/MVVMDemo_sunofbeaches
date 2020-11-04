@@ -1,5 +1,7 @@
 package net.shuzhi.mvvmdemo.player
 
+import net.shuzhi.mvvmdemo.player.domain.Music
+
 /**
  * @author 梁爽
  * @create 2020/10/31 16:52
@@ -16,55 +18,48 @@ package net.shuzhi.mvvmdemo.player
  *
  * 暂停
  * -更新ui为暂停
- * -
+ *
+ *
+ * 相关数据：
+ * 当前播放的歌曲
+ * 播放状态
  */
-class PlayerPresenter {
+class PlayerPresenter private constructor() {
+
+    private val playerModel by lazy { PlayerModel() }
+
+    private val player by lazy { MusicPlayer() }
+
+    var currentMusic = DataListenerContainer<Music>()
+
+    var currentPlayState = DataListenerContainer<PlayState>()
+
+    companion object {
+        val instance by lazy {
+            PlayerPresenter()
+        }
+    }
 
     enum class PlayState {
         NONE, PLAYING, PAUSE, LOADING
-    }
-
-    private val callbackList = arrayListOf<IPlayerCallback>()
-
-    private var currentPlayState = PlayState.NONE;
-
-    fun registerCallback(callback: IPlayerCallback) {
-        if (!callbackList.contains(callback)) {
-            callbackList.add(callback)
-        }
-    }
-
-    fun unRegisterCallback(callback: IPlayerCallback) {
-        //这里比视频里的多了一个判断
-        if (!callbackList.contains(callback)) {
-            callbackList.remove(callback)
-        }
     }
 
     /**
      * 根据状态控制播放
      */
     fun doPlayOrPause() {
-        dispatchTitleChange("当前播放的歌曲标题...")
-        dispatchCoverChange("当前播放的歌曲封面...")
-        if (currentPlayState != PlayState.PLAYING) {
+        if (currentMusic.value == null) {
+            //获取一首歌曲
+            currentMusic.value = playerModel.getMusicById("卡农")
+        }
+        //开始播放音乐
+        player.play(currentMusic.value)
+        if (currentPlayState.value != PlayState.PLAYING) {
             //播放音乐
-            dispatchPlayingState()
+            currentPlayState.value = PlayState.PLAYING
         } else {
             //暂停
-            dispatchPauseState()
-        }
-    }
-
-    private fun dispatchPauseState() {
-        callbackList.forEach {
-            it.onPlayerPause()
-        }
-    }
-
-    private fun dispatchPlayingState() {
-        callbackList.forEach {
-            it.onPlaying()
+            currentPlayState.value = PlayState.PAUSE
         }
     }
 
@@ -72,39 +67,25 @@ class PlayerPresenter {
      * 播放下一首歌曲
      */
     fun playNext() {
+        currentMusic.value = playerModel.getMusicById("下一首：梦中的婚礼")
         //1. 拿到下一首歌曲 -> 变更ui 标题和封面
-        dispatchTitleChange("切换到下一首，标题变化了...")
-        dispatchCoverChange("切换到下一首，封面变化了...")
         //2. 设置给播放器
 
         //3. 等待播放的回调通知
+        currentPlayState.value = PlayState.PLAYING
 
-
-    }
-
-    private fun dispatchCoverChange(cover: String) {
-        callbackList.forEach {
-            it.onCoverChange(cover)
-        }
-    }
-
-    private fun dispatchTitleChange(title: String) {
-        callbackList.forEach {
-            it.onTitleChange(title)
-        }
     }
 
     /**
      * 播放上一首歌曲
      */
     fun playPre() {
+        currentMusic.value = playerModel.getMusicById("上一首：圣母颂")
         //1. 拿到下一首歌曲 -> 变更ui 标题和封面
-        dispatchTitleChange("切换到上一首，标题变化了...")
-        dispatchCoverChange("切换到上一首，封面变化了...")
         //2. 设置给播放器
 
         //3. 等待播放的回调通知
-
+        currentPlayState.value = PlayState.PLAYING
     }
 
 }

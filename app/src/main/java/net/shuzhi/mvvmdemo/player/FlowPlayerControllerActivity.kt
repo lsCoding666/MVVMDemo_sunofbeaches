@@ -11,12 +11,11 @@ import net.shuzhi.mvvmdemo.R
  */
 class FlowPlayerControllerActivity : AppCompatActivity(), IPlayerCallback {
     private val playerPresenter by lazy {
-        PlayerPresenter()
+        PlayerPresenter.instance
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flow_player)
-        playerPresenter.registerCallback(this)
         initListeners()
     }
 
@@ -28,7 +27,6 @@ class FlowPlayerControllerActivity : AppCompatActivity(), IPlayerCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-        playerPresenter.unRegisterCallback(this)
     }
 
     override fun onTitleChange(title: String) {

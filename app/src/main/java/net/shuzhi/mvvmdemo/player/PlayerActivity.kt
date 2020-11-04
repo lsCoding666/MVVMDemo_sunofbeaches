@@ -10,15 +10,36 @@ import net.shuzhi.mvvmdemo.R
  * @author 梁爽
  * @create 2020/10/31 16:59
  */
-class PlayerActivity : AppCompatActivity(), IPlayerCallback {
+class PlayerActivity : AppCompatActivity(){
 
-    private val playerPresenter by lazy { PlayerPresenter() }
+    private val playerPresenter by lazy { PlayerPresenter.instance }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
-        playerPresenter.registerCallback(this)
         initListeners()
+        initDataListeners()
+    }
+
+    /**
+     * 对数据进行监听
+     */
+    private fun initDataListeners() {
+        playerPresenter.currentMusic.addListener {
+            //更新ui
+            songTitle.text = it?.name
+            println("封面改变了...${it?.cover}")
+        }
+        playerPresenter.currentPlayState.addListener {
+            when(it){
+                PlayerPresenter.PlayState.PAUSE->{
+                    playerOrPauseBtn.text = "播放"
+                }
+                PlayerPresenter.PlayState.PLAYING->{
+                    playerOrPauseBtn.text = "暂停"
+                }
+            }
+        }
     }
 
     private fun initListeners() {
@@ -33,28 +54,7 @@ class PlayerActivity : AppCompatActivity(), IPlayerCallback {
         }
     }
 
-    override fun onTitleChange(title: String) {
-        songTitle.text = title
-    }
-
-    override fun onProgressChange(current: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlaying() {
-        playerOrPauseBtn.text = "暂停"
-    }
-
-    override fun onPlayerPause() {
-        playerOrPauseBtn.text = "播放"
-    }
-
-    override fun onCoverChange(cover: String) {
-        println("封面更新$cover")
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        playerPresenter.unRegisterCallback(this)
     }
 }
