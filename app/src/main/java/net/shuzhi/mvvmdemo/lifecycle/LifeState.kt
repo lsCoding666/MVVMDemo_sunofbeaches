@@ -5,5 +5,5 @@ package net.shuzhi.mvvmdemo.lifecycle
  * @create 2020/11/5 12:40
  */
 enum class LifeState {
-    CREATE, START, RESUME, PAUSE, STOP, DESTROY
+    DESTROY, STOP, PAUSE, CREATE, START,RESUME
 }

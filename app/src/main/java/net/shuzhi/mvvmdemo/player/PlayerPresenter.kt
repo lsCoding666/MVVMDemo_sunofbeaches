@@ -1,6 +1,8 @@
 package net.shuzhi.mvvmdemo.player
 
+import net.shuzhi.mvvmdemo.lifecycle.AbsLifecycle
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
+import net.shuzhi.mvvmdemo.lifecycle.LifeState
 import net.shuzhi.mvvmdemo.player.domain.Music
 
 /**
@@ -25,7 +27,7 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * 当前播放的歌曲
  * 播放状态
  */
-class PlayerPresenter private constructor() :ILifecycle{
+class PlayerPresenter private constructor() :AbsLifecycle(){
 
     private val playerModel by lazy { PlayerModel() }
 
@@ -110,6 +112,10 @@ class PlayerPresenter private constructor() :ILifecycle{
     }
 
     override fun onDestroy() {
+
+    }
+
+    override fun onViewLifeStateChange(state: LifeState) {
 
     }
 

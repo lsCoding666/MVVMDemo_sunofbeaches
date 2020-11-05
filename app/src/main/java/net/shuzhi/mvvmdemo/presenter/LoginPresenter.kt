@@ -1,8 +1,10 @@
 package net.shuzhi.mvvmdemo.presenter
 
 import android.text.TextUtils
+import net.shuzhi.mvvmdemo.lifecycle.AbsLifecycle
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycleOwner
+import net.shuzhi.mvvmdemo.lifecycle.LifeState
 import net.shuzhi.mvvmdemo.model.UserModel
 import net.shuzhi.mvvmdemo.model.UserModel.Companion.STATE_LOGIN_FAILED
 import net.shuzhi.mvvmdemo.model.UserModel.Companion.STATE_LOGIN_LOADING
@@ -12,7 +14,7 @@ import net.shuzhi.mvvmdemo.model.UserModel.Companion.STATE_LOGIN_SUCCESS
  * @author 梁爽
  * @create 2020/10/23 19:11
  */
-class LoginPresenter(owner: ILifecycleOwner) : ILifecycle {
+class LoginPresenter(owner: ILifecycleOwner) : AbsLifecycle() {
     private val userModel by lazy { UserModel() }
 
     init {
@@ -78,27 +80,7 @@ class LoginPresenter(owner: ILifecycleOwner) : ILifecycle {
         fun onLoginFailed()
     }
 
-    override fun onCreate() {
-
-    }
-
-    override fun onStart() {
-
-    }
-
-    override fun onResume() {
-
-    }
-
-    override fun onPause() {
-
-    }
-
-    override fun onStop() {
-
-    }
-
-    override fun onDestroy() {
-
+    override fun onViewLifeStateChange(state: LifeState) {
+        println("current state --> $state")
     }
 }

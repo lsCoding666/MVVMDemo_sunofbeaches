@@ -1,7 +1,9 @@
 package net.shuzhi.mvvmdemo.musicList
 
+import net.shuzhi.mvvmdemo.lifecycle.AbsLifecycle
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycleOwner
+import net.shuzhi.mvvmdemo.lifecycle.LifeState
 import net.shuzhi.mvvmdemo.player.DataListenerContainer
 import net.shuzhi.mvvmdemo.player.domain.Music
 
@@ -51,7 +53,7 @@ class MusicPresenter (owner:ILifecycleOwner){
         })
     }
 
-    inner class ViewLifeImpl :ILifecycle {
+    inner class ViewLifeImpl :AbsLifecycle() {
 
         override fun onCreate() {
             //监听GPS信号变化等等
@@ -78,6 +80,10 @@ class MusicPresenter (owner:ILifecycleOwner){
         }
 
         override fun onDestroy() {
+
+        }
+
+        override fun onViewLifeStateChange(state: LifeState) {
 
         }
     }

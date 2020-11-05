@@ -12,6 +12,7 @@ class MusicModel {
         val result = arrayListOf<Music>()
         Thread {
             for (i in (0 until size)) {
+                Thread.sleep(100)
                 result.add(
                     Music(
                         "音乐的名称 $i",

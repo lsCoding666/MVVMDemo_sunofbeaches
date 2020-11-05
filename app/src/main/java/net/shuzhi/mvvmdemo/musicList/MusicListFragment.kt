@@ -8,9 +8,6 @@ import net.shuzhi.mvvmdemo.base.BaseFragment
  */
 class MusicListFragment : BaseFragment() {
 
-    private val musicPresenter by lazy { MusicPresenter() }
+    private val musicPresenter by lazy { MusicPresenter(this) }
 
-    init {
-        lifecycleProvider.addLifeListener(musicPresenter)
-    }
 }

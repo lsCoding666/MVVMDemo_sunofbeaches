@@ -19,3 +19,5 @@
    c. 还有命名问题,应该是Lifecycle而不是LifeCircle
 
    第一个问题已经在第15节课代码修复,剩下两个在16节课代码中修复
+
+ 2. 发现FlowPlayerControllerActivity缺少了代码 这个错误在第18节课的时候重构的时候修复了

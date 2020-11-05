@@ -25,13 +25,13 @@ class MusicsActivity : BaseActivity() {
      * 监听数据变化
      */
     private fun initDataListener() {
-        musicPresenter.musicList.addListener {
+        musicPresenter.musicList.addListener(this) {
             println(Thread.currentThread().name)
             //数据变化
             println("加载状态 ---> ${it?.size}")
             musicCountText?.text = "加载到了 ---> ${it?.size} 条数据"
         }
-        musicPresenter.loadState.addListener {
+        musicPresenter.loadState.addListener(this) {
             println("加载状态 ---> $it")
         }
     }

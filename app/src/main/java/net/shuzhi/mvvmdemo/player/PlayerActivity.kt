@@ -30,12 +30,12 @@ class PlayerActivity : BaseActivity() {
      * 对数据进行监听
      */
     private fun initDataListeners() {
-        playerPresenter.currentMusic.addListener {
+        playerPresenter.currentMusic.addListener(this) {
             //更新ui
             songTitle.text = it?.name
             println("封面改变了...${it?.cover}")
         }
-        playerPresenter.currentPlayState.addListener {
+        playerPresenter.currentPlayState.addListener(this) {
             when (it) {
                 PlayerPresenter.PlayState.PAUSE -> {
                     playerOrPauseBtn.text = "播放"
