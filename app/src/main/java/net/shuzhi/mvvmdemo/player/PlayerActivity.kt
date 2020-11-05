@@ -5,14 +5,24 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_player.*
 import net.shuzhi.mvvmdemo.R
+import net.shuzhi.mvvmdemo.base.BaseActivity
+import net.shuzhi.mvvmdemo.musicList.MusicPresenter
+import net.shuzhi.mvvmdemo.player.domain.Music
 
 /**
  * @author 梁爽
  * @create 2020/10/31 16:59
  */
-class PlayerActivity : AppCompatActivity(){
+class PlayerActivity : BaseActivity(){
 
     private val playerPresenter by lazy { PlayerPresenter.instance }
+
+    private val musicPresenter by lazy { MusicPresenter() }
+
+    init {
+        addLifeListener(musicPresenter)
+        addLifeListener(playerPresenter)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

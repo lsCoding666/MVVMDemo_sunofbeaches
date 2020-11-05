@@ -47,26 +47,28 @@ class MusicPresenter : ILifeCircle{
     override fun onCreate() {
         //监听GPS信号变化等等
         println("开始监听GPS")
+        //开始监听网络变化
     }
 
     override fun onStart() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onResume() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onPause() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onStop() {
         //停止监听GPS
         println("停止监听GPS")
+        //停止监听网络变化
     }
 
     override fun onDestroy() {
-        TODO("Not yet implemented")
+
     }
 }

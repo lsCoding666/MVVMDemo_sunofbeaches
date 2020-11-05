@@ -1,5 +1,6 @@
 package net.shuzhi.mvvmdemo.player
 
+import net.shuzhi.mvvmdemo.lifecycle.ILifeCircle
 import net.shuzhi.mvvmdemo.player.domain.Music
 
 /**
@@ -24,7 +25,7 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * 当前播放的歌曲
  * 播放状态
  */
-class PlayerPresenter private constructor() {
+class PlayerPresenter private constructor() :ILifeCircle{
 
     private val playerModel by lazy { PlayerModel() }
 
@@ -86,6 +87,30 @@ class PlayerPresenter private constructor() {
 
         //3. 等待播放的回调通知
         currentPlayState.value = PlayState.PLAYING
+    }
+
+    override fun onCreate() {
+
+    }
+
+    override fun onStart() {
+        println("监听网络变化...")
+    }
+
+    override fun onResume() {
+
+    }
+
+    override fun onPause() {
+
+    }
+
+    override fun onStop() {
+        println("停止监听网络变化...")
+    }
+
+    override fun onDestroy() {
+
     }
 
 }
