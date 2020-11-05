@@ -1,5 +1,8 @@
 package net.shuzhi.mvvmdemo.player
 
+import android.os.Looper
+import net.shuzhi.mvvmdemo.App
+
 /**
  * @author 梁爽
  * @create 2020/11/4 22:23
@@ -14,7 +17,15 @@ class DataListenerContainer<T> {
         set(value) {
             //视频中漏了这一行
             field = value
-            blocks.forEach { it.invoke(value) }
+            //判断当前线程是不是主线程,否则切换到主线程运行
+            if (Looper.getMainLooper().thread === Thread.currentThread()){
+                blocks.forEach { it.invoke(value) }
+            }else{
+                App.handler.post{
+                    blocks.forEach { it.invoke(value) }
+                }
+            }
+
         }
 
     fun addListener(block: (T?) -> Unit) {
