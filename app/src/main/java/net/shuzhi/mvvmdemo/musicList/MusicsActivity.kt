@@ -12,11 +12,7 @@ import net.shuzhi.mvvmdemo.base.BaseActivity
  */
 class MusicsActivity : BaseActivity() {
 
-    private val musicPresenter by lazy { MusicPresenter() }
-
-    init {
-        lifeProvider.addLifeListener(musicPresenter)
-    }
+    private val musicPresenter by lazy { MusicPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,6 +3,7 @@ package net.shuzhi.mvvmdemo.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
+import net.shuzhi.mvvmdemo.lifecycle.ILifecycleOwner
 import net.shuzhi.mvvmdemo.lifecycle.LifeState
 import net.shuzhi.mvvmdemo.lifecycle.LifecycleProvider
 import net.shuzhi.mvvmdemo.musicList.MusicPresenter
@@ -11,7 +12,7 @@ import net.shuzhi.mvvmdemo.musicList.MusicPresenter
  * @author 梁爽
  * @create 2020/11/5 12:14
  */
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity(),ILifecycleOwner {
 
     val lifeProvider by lazy { LifecycleProvider() }
 
@@ -43,5 +44,9 @@ open class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         lifeProvider.makeLifeState(LifeState.DESTROY)
+    }
+
+    override fun getLifecycleProvider(): LifecycleProvider {
+        return lifeProvider
     }
 }

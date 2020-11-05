@@ -1,6 +1,7 @@
 package net.shuzhi.mvvmdemo.musicList
 
 import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
+import net.shuzhi.mvvmdemo.lifecycle.ILifecycleOwner
 import net.shuzhi.mvvmdemo.player.DataListenerContainer
 import net.shuzhi.mvvmdemo.player.domain.Music
 
@@ -8,7 +9,13 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * @author 梁爽
  * @create 2020/11/4 23:20
  */
-class MusicPresenter : ILifecycle{
+class MusicPresenter (owner:ILifecycleOwner){
+
+    private val viewLifeImpl by lazy { ViewLifeImpl() }
+
+    init {
+        owner.getLifecycleProvider().addLifeListener(viewLifeImpl)
+    }
 
     private val musicModel by lazy {
         MusicModel()
@@ -44,31 +51,34 @@ class MusicPresenter : ILifecycle{
         })
     }
 
-    override fun onCreate() {
-        //监听GPS信号变化等等
-      //  println("开始监听GPS")
-        //开始监听网络变化
-    }
+    inner class ViewLifeImpl :ILifecycle {
 
-    override fun onStart() {
-        println("开始监听GPS")
-    }
+        override fun onCreate() {
+            //监听GPS信号变化等等
+            //  println("开始监听GPS")
+            //开始监听网络变化
+        }
 
-    override fun onResume() {
+        override fun onStart() {
+            println("开始监听GPS")
+        }
 
-    }
+        override fun onResume() {
 
-    override fun onPause() {
+        }
 
-    }
+        override fun onPause() {
 
-    override fun onStop() {
-        //停止监听GPS
-        println("停止监听GPS")
-        //停止监听网络变化
-    }
+        }
 
-    override fun onDestroy() {
+        override fun onStop() {
+            //停止监听GPS
+            println("停止监听GPS")
+            //停止监听网络变化
+        }
 
+        override fun onDestroy() {
+
+        }
     }
 }

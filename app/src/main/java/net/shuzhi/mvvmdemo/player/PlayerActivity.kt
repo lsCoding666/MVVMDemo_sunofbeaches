@@ -17,12 +17,7 @@ class PlayerActivity : BaseActivity() {
 
     private val playerPresenter by lazy { PlayerPresenter.instance }
 
-    private val musicPresenter by lazy { MusicPresenter() }
-
-    init {
-        lifeProvider.addLifeListener(musicPresenter)
-        lifeProvider.addLifeListener(playerPresenter)
-    }
+    private val musicPresenter by lazy { MusicPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import kotlinx.android.synthetic.main.activity_main.*
+import net.shuzhi.mvvmdemo.base.BaseActivity
 import net.shuzhi.mvvmdemo.presenter.LoginPresenter
 
-class LoginActivity : AppCompatActivity(),
+class LoginActivity : BaseActivity(),
     LoginPresenter.OnCheckUserNameStateResultCallback, LoginPresenter.OnDoLoginStateChange {
 
-    private val loginPresenter by lazy { LoginPresenter() }
+    private val loginPresenter by lazy { LoginPresenter(this) }
     private var isUserNameAvailable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

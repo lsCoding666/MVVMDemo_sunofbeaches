@@ -16,7 +16,7 @@ class MusicDetailFragment : BaseFragment() {
     private val musicPresenter by lazy { MusicPresenter() }
 
     init {
-        lifecycleProvider.addLifeListener(musicPresenter)
+        lifecycleProvider.addLifeListener()
     }
 
 
