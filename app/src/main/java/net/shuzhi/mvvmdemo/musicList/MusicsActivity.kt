@@ -18,6 +18,32 @@ class MusicsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_musics)
         initDataListener()
         initViewListeners()
+        musicPresenter.onCreate()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        musicPresenter.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        musicPresenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicPresenter.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        musicPresenter.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        musicPresenter.onDestroy()
     }
 
     /**

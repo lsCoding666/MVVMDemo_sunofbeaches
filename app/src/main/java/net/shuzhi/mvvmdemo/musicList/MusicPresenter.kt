@@ -1,5 +1,6 @@
 package net.shuzhi.mvvmdemo.musicList
 
+import net.shuzhi.mvvmdemo.lifecycle.ILifeCircle
 import net.shuzhi.mvvmdemo.player.DataListenerContainer
 import net.shuzhi.mvvmdemo.player.domain.Music
 
@@ -7,7 +8,7 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * @author 梁爽
  * @create 2020/11/4 23:20
  */
-class MusicPresenter {
+class MusicPresenter : ILifeCircle{
 
     private val musicModel by lazy {
         MusicModel()
@@ -41,5 +42,31 @@ class MusicPresenter {
             }
 
         })
+    }
+
+    override fun onCreate() {
+        //监听GPS信号变化等等
+        println("开始监听GPS")
+    }
+
+    override fun onStart() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onResume() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPause() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onStop() {
+        //停止监听GPS
+        println("停止监听GPS")
+    }
+
+    override fun onDestroy() {
+        TODO("Not yet implemented")
     }
 }
