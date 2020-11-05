@@ -1,6 +1,6 @@
 package net.shuzhi.mvvmdemo.player
 
-import net.shuzhi.mvvmdemo.lifecycle.ILifeCircle
+import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
 import net.shuzhi.mvvmdemo.player.domain.Music
 
 /**
@@ -25,7 +25,7 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * 当前播放的歌曲
  * 播放状态
  */
-class PlayerPresenter private constructor() :ILifeCircle{
+class PlayerPresenter private constructor() :ILifecycle{
 
     private val playerModel by lazy { PlayerModel() }
 

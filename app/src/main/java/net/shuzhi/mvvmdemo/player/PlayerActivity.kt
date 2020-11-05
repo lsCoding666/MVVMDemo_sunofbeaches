@@ -13,15 +13,15 @@ import net.shuzhi.mvvmdemo.player.domain.Music
  * @author 梁爽
  * @create 2020/10/31 16:59
  */
-class PlayerActivity : BaseActivity(){
+class PlayerActivity : BaseActivity() {
 
     private val playerPresenter by lazy { PlayerPresenter.instance }
 
     private val musicPresenter by lazy { MusicPresenter() }
 
     init {
-        addLifeListener(musicPresenter)
-        addLifeListener(playerPresenter)
+        lifeProvider.addLifeListener(musicPresenter)
+        lifeProvider.addLifeListener(playerPresenter)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +41,11 @@ class PlayerActivity : BaseActivity(){
             println("封面改变了...${it?.cover}")
         }
         playerPresenter.currentPlayState.addListener {
-            when(it){
-                PlayerPresenter.PlayState.PAUSE->{
+            when (it) {
+                PlayerPresenter.PlayState.PAUSE -> {
                     playerOrPauseBtn.text = "播放"
                 }
-                PlayerPresenter.PlayState.PLAYING->{
+                PlayerPresenter.PlayState.PLAYING -> {
                     playerOrPauseBtn.text = "暂停"
                 }
             }

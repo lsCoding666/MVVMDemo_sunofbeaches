@@ -1,47 +1,44 @@
 package net.shuzhi.mvvmdemo.base
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import net.shuzhi.mvvmdemo.lifecycle.ILifecycle
+import androidx.fragment.app.Fragment
 import net.shuzhi.mvvmdemo.lifecycle.LifeState
 import net.shuzhi.mvvmdemo.lifecycle.LifecycleProvider
-import net.shuzhi.mvvmdemo.musicList.MusicPresenter
 
 /**
  * @author 梁爽
- * @create 2020/11/5 12:14
+ * @create 2020/11/5 13:00
  */
-open class BaseActivity : AppCompatActivity() {
-
-    val lifeProvider by lazy { LifecycleProvider() }
+open class BaseFragment : Fragment() {
+    val lifecycleProvider by lazy { LifecycleProvider() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifeProvider.makeLifeState(LifeState.CREATE)
+        lifecycleProvider.makeLifeState(LifeState.CREATE)
     }
 
     override fun onStart() {
         super.onStart()
-        lifeProvider.makeLifeState(LifeState.START)
+        lifecycleProvider.makeLifeState(LifeState.START)
     }
 
     override fun onResume() {
         super.onResume()
-        lifeProvider.makeLifeState(LifeState.RESUME)
+        lifecycleProvider.makeLifeState(LifeState.RESUME)
     }
 
     override fun onPause() {
         super.onPause()
-        lifeProvider.makeLifeState(LifeState.PAUSE)
+        lifecycleProvider.makeLifeState(LifeState.PAUSE)
     }
 
     override fun onStop() {
         super.onStop()
-        lifeProvider.makeLifeState(LifeState.STOP)
+        lifecycleProvider.makeLifeState(LifeState.STOP)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        lifeProvider.makeLifeState(LifeState.DESTROY)
+        lifecycleProvider.makeLifeState(LifeState.DESTROY)
     }
 }
