@@ -3,13 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
         android:layout_width="match_parent"
+        android:id="@+id/contentRefreshView"
         android:background="#dfdfdf"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:visibility="gone"
-        android:id="@+id/contentListRv"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:id="@+id/contentListRv"/>
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+
 
     <include layout="@layout/activity_on_empty"
         android:layout_height="match_parent"

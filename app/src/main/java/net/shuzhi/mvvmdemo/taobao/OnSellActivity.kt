@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
 import kotlinx.android.synthetic.main.activity_on_error.*
 import kotlinx.android.synthetic.main.activity_on_sell.*
 import kotlinx.android.synthetic.main.activity_on_sell.view.*
@@ -62,7 +64,7 @@ class OnSellActivity : AppCompatActivity() {
                         errorView.visibility = View.VISIBLE
                     }
                     LoadState.SUCCESS->{
-                        contentListRv.visibility = View.VISIBLE
+                        contentRefreshView.visibility = View.VISIBLE
                     }
                 }
             })
@@ -73,6 +75,17 @@ class OnSellActivity : AppCompatActivity() {
      * 初始化View
      */
     private fun initView() {
+        contentRefreshView.run {
+            setEnableLoadmore(true)
+            setEnableRefresh(true)
+            setEnableOverScroll(true)
+            setOnRefreshListener(object:RefreshListenerAdapter(){
+                override fun onLoadMore(refreshLayout: TwinklingRefreshLayout?) {
+                    //去执行加载更多
+                    mViewModel.loadMode()
+                }
+            })
+        }
         reloadLl.setOnClickListener{
             //重新加载数据
             mViewModel.loadContent()
@@ -102,7 +115,7 @@ class OnSellActivity : AppCompatActivity() {
     }
 
     private fun hideAll(){
-        contentListRv.visibility = View.GONE
+        contentRefreshView.visibility = View.GONE
         errorView.visibility = View.GONE
         loadingView.visibility = View.GONE
         emptyView.visibility = View.GONE

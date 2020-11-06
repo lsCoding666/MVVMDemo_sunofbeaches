@@ -35,7 +35,7 @@ class OnSellViewModel : ViewModel() {
      * 加载更多内容
      */
     fun loadMode() {
-
+        println("load more...")
     }
 
     /**
