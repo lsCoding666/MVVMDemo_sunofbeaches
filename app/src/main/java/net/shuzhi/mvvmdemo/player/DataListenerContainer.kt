@@ -74,6 +74,16 @@ class DataListenerContainer<T> {
             lifecycle.remove(valueObserver)
             println("removeValueObserver...")
         }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        fun onStop(owner:LifecycleOwner){
+            println("onStop ---> owner ==== $owner")
+        }
+        @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+        fun onAny(owner: LifecycleOwner,event:Lifecycle.Event){
+            println("owner ==== $owner")
+            println("event---> $event")
+        }
     }
 
 }
