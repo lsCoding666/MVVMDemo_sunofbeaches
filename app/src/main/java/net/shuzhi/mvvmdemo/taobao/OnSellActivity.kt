@@ -3,6 +3,7 @@ package net.shuzhi.mvvmdemo.taobao
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,6 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
 import kotlinx.android.synthetic.main.activity_on_error.*
 import kotlinx.android.synthetic.main.activity_on_sell.*
-import kotlinx.android.synthetic.main.activity_on_sell.view.*
 import net.shuzhi.mvvmdemo.R
 import net.shuzhi.mvvmdemo.adapter.OnSellListAdapter
 import net.shuzhi.mvvmdemo.base.LoadState
@@ -50,21 +50,37 @@ class OnSellActivity : AppCompatActivity() {
                 //TODO:更新适配器
                 mAdapter.setData(it)
             })
-            loadState.observe(this@OnSellActivity,Observer{
-                hideAll()
+            loadState.observe(this@OnSellActivity, Observer {
+                if (it != LoadState.LOADER_MORE_LOADING) {
+                    hideAll()
+                }
                 //根据加载的状态来更新ui的显示
-                when(it){
-                    LoadState.LOADING->{
+                when (it) {
+                    LoadState.LOADING -> {
                         loadingView.visibility = View.VISIBLE
                     }
-                    LoadState.EMPTY->{
+                    LoadState.EMPTY -> {
                         emptyView.visibility = View.VISIBLE
                     }
-                    LoadState.ERROR->{
+                    LoadState.ERROR -> {
                         errorView.visibility = View.VISIBLE
                     }
-                    LoadState.SUCCESS->{
+                    LoadState.SUCCESS -> {
                         contentRefreshView.visibility = View.VISIBLE
+                        contentRefreshView.finishLoadmore()
+                    }
+                    LoadState.LOADER_MORE_ERROR -> {
+                        contentRefreshView.visibility = View.VISIBLE
+                        Toast.makeText(this@OnSellActivity, "网络不佳 请稍后重试", Toast.LENGTH_SHORT).show()
+                        contentRefreshView.finishLoadmore()
+                    }
+                    LoadState.LOADER_MORE_EMPTY -> {
+                        Toast.makeText(this@OnSellActivity, "没有更多内容了", Toast.LENGTH_SHORT).show()
+                        contentRefreshView.visibility = View.VISIBLE
+                        contentRefreshView.finishLoadmore()
+                    }
+                    else -> {
+
                     }
                 }
             })
@@ -79,14 +95,14 @@ class OnSellActivity : AppCompatActivity() {
             setEnableLoadmore(true)
             setEnableRefresh(true)
             setEnableOverScroll(true)
-            setOnRefreshListener(object:RefreshListenerAdapter(){
+            setOnRefreshListener(object : RefreshListenerAdapter() {
                 override fun onLoadMore(refreshLayout: TwinklingRefreshLayout?) {
                     //去执行加载更多
-                    mViewModel.loadMode()
+                    mViewModel.loaderMode()
                 }
             })
         }
-        reloadLl.setOnClickListener{
+        reloadLl.setOnClickListener {
             //重新加载数据
             mViewModel.loadContent()
         }
@@ -114,7 +130,7 @@ class OnSellActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideAll(){
+    private fun hideAll() {
         contentRefreshView.visibility = View.GONE
         errorView.visibility = View.GONE
         loadingView.visibility = View.GONE
