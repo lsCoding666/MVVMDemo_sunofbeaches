@@ -5,7 +5,7 @@ package net.shuzhi.mvvmdemo.domain
  * @create 2020/11/6 20:04
  */
 data class OnSellData(
-    val tbk_dg_optimus_material_response: TbkDgOptimusMaterialResponse
+     val tbk_dg_optimus_material_response: TbkDgOptimusMaterialResponse
 )
 
 data class TbkDgOptimusMaterialResponse(
