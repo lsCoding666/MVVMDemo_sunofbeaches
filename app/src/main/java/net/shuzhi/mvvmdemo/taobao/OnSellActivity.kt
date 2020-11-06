@@ -13,5 +13,6 @@ class OnSellActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel= ViewModelProvider(this).get(OnSellViewModel::class.java)
+        viewModel.loadContent()
     }
 }
