@@ -8,9 +8,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_on_error.*
 import kotlinx.android.synthetic.main.activity_on_sell.*
+import kotlinx.android.synthetic.main.activity_on_sell.view.*
 import net.shuzhi.mvvmdemo.R
 import net.shuzhi.mvvmdemo.adapter.OnSellListAdapter
+import net.shuzhi.mvvmdemo.base.LoadState
 import net.shuzhi.mvvmdemo.utils.SizeUtils
 
 /**
@@ -32,6 +35,7 @@ class OnSellActivity : AppCompatActivity() {
         setContentView(R.layout.activity_on_sell)
         initView()
         initObserver()
+
     }
 
     /**
@@ -42,8 +46,25 @@ class OnSellActivity : AppCompatActivity() {
             contentList.observe(this@OnSellActivity, Observer {
                 //内容列表更新
                 //TODO:更新适配器
-                println("数据变化了")
                 mAdapter.setData(it)
+            })
+            loadState.observe(this@OnSellActivity,Observer{
+                hideAll()
+                //根据加载的状态来更新ui的显示
+                when(it){
+                    LoadState.LOADING->{
+                        loadingView.visibility = View.VISIBLE
+                    }
+                    LoadState.EMPTY->{
+                        emptyView.visibility = View.VISIBLE
+                    }
+                    LoadState.ERROR->{
+                        errorView.visibility = View.VISIBLE
+                    }
+                    LoadState.SUCCESS->{
+                        contentListRv.visibility = View.VISIBLE
+                    }
+                }
             })
         }.loadContent()
     }
@@ -52,6 +73,10 @@ class OnSellActivity : AppCompatActivity() {
      * 初始化View
      */
     private fun initView() {
+        reloadLl.setOnClickListener{
+            //重新加载数据
+            mViewModel.loadContent()
+        }
         contentListRv.run {
             layoutManager = LinearLayoutManager(this@OnSellActivity)
             adapter = mAdapter
@@ -64,7 +89,7 @@ class OnSellActivity : AppCompatActivity() {
                         state: RecyclerView.State
                     ) {
                         outRect.apply {
-                            val padding =SizeUtils.dip2px(this@OnSellActivity,4.0f)
+                            val padding = SizeUtils.dip2px(this@OnSellActivity, 4.0f)
                             top = padding
                             left = padding
                             bottom = padding
@@ -74,5 +99,12 @@ class OnSellActivity : AppCompatActivity() {
                 }
             )
         }
+    }
+
+    private fun hideAll(){
+        contentListRv.visibility = View.GONE
+        errorView.visibility = View.GONE
+        loadingView.visibility = View.GONE
+        emptyView.visibility = View.GONE
     }
 }

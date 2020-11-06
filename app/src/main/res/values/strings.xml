@@ -9,4 +9,6 @@
     <string name="play_next_text">下一首</string>
     <string name="play_previous_text">上一首</string>
     <string name="user_name">用户名</string>
+    <string name="loading">加载中</string>
+    <string name="text_network_error_tips">点击重新加载</string>
 </resources>

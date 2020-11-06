@@ -8,6 +8,25 @@
         android:background="#dfdfdf"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+        android:visibility="gone"
         android:id="@+id/contentListRv"/>
+
+    <include layout="@layout/activity_on_empty"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent" />
+
+    <include layout="@layout/activity_on_loading"
+        android:layout_height="match_parent"
+        android:id="@+id/loadingView"
+        android:visibility="visible"
+        android:layout_width="match_parent" />
+
+    <include layout="@layout/activity_on_error"
+        android:layout_height="match_parent"
+        android:id="@+id/errorView"
+        android:visibility="gone"
+        android:layout_width="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
