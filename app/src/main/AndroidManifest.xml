@@ -13,12 +13,13 @@
         <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".player.PlayerActivity">
-        </activity>
-        <activity android:name=".musicList.MusicsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".musicList.MusicsActivity">
+        </activity>
+        <activity android:name=".player.FlowPlayerControllerActivity"/>
     </application>
 </manifest>

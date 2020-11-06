@@ -1,13 +1,17 @@
 package net.shuzhi.mvvmdemo.player
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_player.*
 import net.shuzhi.mvvmdemo.R
 import net.shuzhi.mvvmdemo.base.BaseActivity
 import net.shuzhi.mvvmdemo.musicList.MusicPresenter
 import net.shuzhi.mvvmdemo.player.domain.Music
+import java.util.*
 
 /**
  * @author 梁爽
@@ -26,10 +30,25 @@ class PlayerActivity : BaseActivity() {
         initDataListeners()
     }
 
+    fun toFlowPage(view:View){
+        startActivity(Intent(this,FlowPlayerControllerActivity::class.java))
+    }
+
+    private val livePlayerObserver by lazy { LivePlayerStateObserver() }
+
+    class  LivePlayerStateObserver:Observer<PlayerPresenter.PlayState>{
+        override fun onChanged(t: PlayerPresenter.PlayState?) {
+            println("播放器界面...live data --->  当前的状态 ---> $t")
+        }
+    }
+
     /**
      * 对数据进行监听
      */
     private fun initDataListeners() {
+
+        LivePlayerState.instance.observeForever(livePlayerObserver)
+
         playerPresenter.currentMusic.addListener(this) {
             //更新ui
             songTitle.text = it?.name
@@ -61,5 +80,6 @@ class PlayerActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        LivePlayerState.instance.removeObserver(livePlayerObserver)
     }
 }

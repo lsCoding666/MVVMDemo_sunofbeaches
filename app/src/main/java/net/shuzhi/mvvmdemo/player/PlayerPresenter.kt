@@ -35,6 +35,8 @@ class PlayerPresenter private constructor() :AbsLifecycle(){
 
     var currentMusic = DataListenerContainer<Music>()
 
+    var livePlayState = LivePlayerState.instance
+
     var currentPlayState = DataListenerContainer<PlayState>()
 
     companion object {
@@ -60,9 +62,11 @@ class PlayerPresenter private constructor() :AbsLifecycle(){
         if (currentPlayState.value != PlayState.PLAYING) {
             //播放音乐
             currentPlayState.value = PlayState.PLAYING
+            livePlayState.postValue(PlayState.PLAYING)
         } else {
             //暂停
             currentPlayState.value = PlayState.PAUSE
+            livePlayState.postValue(PlayState.PAUSE)
         }
     }
 
