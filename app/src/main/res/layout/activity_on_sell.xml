@@ -5,7 +5,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:background="#dfdfdf"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         android:id="@+id/contentListRv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
