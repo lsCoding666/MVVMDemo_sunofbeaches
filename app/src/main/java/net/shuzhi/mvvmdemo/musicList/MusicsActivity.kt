@@ -2,6 +2,7 @@ package net.shuzhi.mvvmdemo.musicList
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_musics.*
 import net.shuzhi.mvvmdemo.R
 import net.shuzhi.mvvmdemo.base.BaseActivity
@@ -25,6 +26,15 @@ class MusicsActivity : BaseActivity() {
      * 监听数据变化
      */
     private fun initDataListener() {
+
+        musicPresenter.liveMusicList.observe(
+            this,
+            Observer {
+                println("live data里的音乐列表数据更新了${it?.size}条数据")
+                musicCountText?.text = "更新了${it?.size}条数据"
+            }
+        )
+
         musicPresenter.musicList.addListener(this) {
             println(Thread.currentThread().name)
             //数据变化
